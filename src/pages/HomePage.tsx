@@ -2,45 +2,12 @@ import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
 import JobCard from '../components/JobCard';
 import Footer from '../components/Footer';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
+import { useJobs } from '../hooks/useJobs';
 
 export default function HomePage() {
-    // Mock data - sẽ thay thế bằng data từ API sau
-    const mockJobs = [
-        {
-            id: '1',
-            company: 'FPT Software',
-            location: 'Hà Nội',
-            rating: 4.9,
-            distance: '2.5 km',
-            image:
-                'https://images.unsplash.com/photo-1625047509248-ec889cbff17f?q=80&w=2832&auto=format&fit=crop',
-            tags: ['Full-time', 'Senior'],
-            workload: '100% Remote',
-        },
-        {
-            id: '2',
-            company: 'Viettel Solutions',
-            location: 'Hồ Chí Minh',
-            rating: 5.0,
-            distance: '1.2 km',
-            image:
-                'https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=1600&q=80',
-            tags: ['Full-time', 'Mid-level'],
-            workload: '80-100% Onsite',
-        },
-        {
-            id: '3',
-            company: 'VNG Corporation',
-            location: 'Hồ Chí Minh',
-            rating: 4.8,
-            distance: '5 km',
-            image:
-                'https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=1600&q=80',
-            tags: ['Full-time', 'Junior'],
-            workload: '100% Hybrid',
-        },
-    ];
+    // Fetch jobs từ API
+    const { data, isLoading, isError, error } = useJobs(1, 9); // Lấy 9 jobs cho grid 3x3
 
     return (
         <div className="min-h-screen bg-stone-50 selection:bg-red-100 selection:text-red-900">
@@ -87,13 +54,17 @@ export default function HomePage() {
                                 <p className="text-xs font-mono text-stone-400 uppercase">
                                     Công ty tuyển dụng
                                 </p>
-                                <p className="text-lg font-semibold tracking-tight">1,200+</p>
+                                <p className="text-lg font-semibold tracking-tight">
+                                    {data?.data?.meta?.total || 0}+
+                                </p>
                             </div>
                             <div className="text-right">
                                 <p className="text-xs font-mono text-stone-400 uppercase">
-                                    Ứng viên đang tìm việc
+                                    Việc làm đang tuyển
                                 </p>
-                                <p className="text-lg font-semibold tracking-tight">15,000+</p>
+                                <p className="text-lg font-semibold tracking-tight">
+                                    {data?.data?.meta?.total || 0}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -120,11 +91,41 @@ export default function HomePage() {
                     </a>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {mockJobs.map((job) => (
-                        <JobCard key={job.id} {...job} />
-                    ))}
-                </div>
+                {/* Loading state */}
+                {isLoading && (
+                    <div className="flex items-center justify-center py-20">
+                        <Loader2 className="w-8 h-8 text-red-600 animate-spin" />
+                        <span className="ml-3 text-stone-600">Đang tải việc làm...</span>
+                    </div>
+                )}
+
+                {/* Error state */}
+                {isError && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                        <p className="text-red-800 font-medium">
+                            Không thể tải danh sách việc làm
+                        </p>
+                        <p className="text-red-600 text-sm mt-2">
+                            {error?.message || 'Vui lòng thử lại sau'}
+                        </p>
+                    </div>
+                )}
+
+                {/* Jobs grid */}
+                {!isLoading && !isError && data?.data?.result && (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {data.data.result.map((job) => (
+                            <JobCard key={job._id} job={job} />
+                        ))}
+                    </div>
+                )}
+
+                {/* Empty state */}
+                {!isLoading && !isError && data?.data?.result?.length === 0 && (
+                    <div className="text-center py-20">
+                        <p className="text-stone-500">Chưa có việc làm nào</p>
+                    </div>
+                )}
             </section>
 
             <Footer />

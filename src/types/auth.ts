@@ -2,14 +2,19 @@ export interface User {
     _id: string;
     name: string;
     email: string;
-    age?: number;
-    gender?: string;
-    address?: string;
     role?: {
         _id: string;
         name: string;
-        permissions?: Permission[];
     };
+    permissions?: Array<{
+        _id: string;
+        name: string;
+        apiPath: string;
+        method: string;
+        module: string;
+    }>;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface Permission {

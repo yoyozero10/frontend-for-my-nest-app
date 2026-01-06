@@ -16,7 +16,7 @@ export interface CompaniesResponse {
             page: number;
             limit: number;
             totalItems: number;
-            totalPages: number;
+            pages: number;  // Backend returns 'pages', not 'totalPages'
         };
         result: Company[];
     };

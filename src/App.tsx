@@ -9,6 +9,17 @@ import CompaniesListPage from './pages/companies/CompaniesListPage';
 import CompanyDetailPage from './pages/companies/CompanyDetailPage';
 import MyResumesPage from './pages/resumes/MyResumesPage';
 import ProfilePage from './pages/profile/ProfilePage';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminLayout from './components/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminJobsPage from './pages/admin/jobs/AdminJobsPage';
+import CreateJobPage from './pages/admin/jobs/CreateJobPage';
+import EditJobPage from './pages/admin/jobs/EditJobPage';
+import AdminCompaniesPage from './pages/admin/companies/AdminCompaniesPage';
+import CreateCompanyPage from './pages/admin/companies/CreateCompanyPage';
+import EditCompanyPage from './pages/admin/companies/EditCompanyPage';
+import AdminResumesPage from './pages/admin/resumes/AdminResumesPage';
+import AdminUsersPage from './pages/admin/users/AdminUsersPage';
 import './index.css';
 
 // Create a client
@@ -35,7 +46,19 @@ function App() {
           <Route path="/companies/:id" element={<CompanyDetailPage />} />
           <Route path="/my-resumes" element={<MyResumesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          {/* Protected routes sẽ được thêm sau */}
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="jobs" element={<AdminJobsPage />} />
+            <Route path="jobs/create" element={<CreateJobPage />} />
+            <Route path="jobs/edit/:id" element={<EditJobPage />} />
+            <Route path="companies" element={<AdminCompaniesPage />} />
+            <Route path="companies/create" element={<CreateCompanyPage />} />
+            <Route path="companies/edit/:id" element={<EditCompanyPage />} />
+            <Route path="resumes" element={<AdminResumesPage />} />
+            <Route path="users" element={<AdminUsersPage />} />
+          </Route>
         </Routes>
       </Router>
     </QueryClientProvider>

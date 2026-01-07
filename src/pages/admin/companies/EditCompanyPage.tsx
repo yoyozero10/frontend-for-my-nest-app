@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUpdateCompany, useCompany } from '../../../hooks/useCompanies';
 import { ArrowLeft, Loader2 } from 'lucide-react';
+import FileUpload from '../../../components/FileUpload';
 import type { UpdateCompanyDto } from '../../../types/company';
 
 export default function EditCompanyPage() {
@@ -114,16 +115,14 @@ export default function EditCompanyPage() {
                         />
                     </div>
 
-                    {/* Logo URL */}
+                    {/* Logo Upload */}
                     <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-stone-700 mb-2">
-                            Logo URL (Optional)
-                        </label>
-                        <input
-                            type="url"
-                            value={formData.logo}
-                            onChange={(e) => setFormData(prev => ({ ...prev, logo: e.target.value }))}
-                            className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                        <FileUpload
+                            onUploadSuccess={(url) => setFormData(prev => ({ ...prev, logo: url }))}
+                            accept="image/*"
+                            maxSize={2}
+                            label="Upload Logo (Optional)"
+                            currentFile={formData.logo}
                         />
                     </div>
 

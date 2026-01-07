@@ -6,13 +6,6 @@ export interface User {
         _id: string;
         name: string;
     };
-    permissions?: Array<{
-        _id: string;
-        name: string;
-        apiPath: string;
-        method: string;
-        module: string;
-    }>;
     createdAt?: string;
     updatedAt?: string;
 }

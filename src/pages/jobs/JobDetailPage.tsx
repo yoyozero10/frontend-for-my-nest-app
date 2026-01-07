@@ -5,6 +5,7 @@ import { useAuthStore } from '../../stores/authStore';
 import { useCreateResume } from '../../hooks/resumes.hooks';
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
+import FileUpload from '../../components/FileUpload';
 import {
     MapPin,
     DollarSign,
@@ -276,16 +277,11 @@ export default function JobDetailPage() {
 
                         {/* Input */}
                         <div className="mb-6">
-                            <label className="block text-sm font-medium text-stone-700 mb-2">
-                                URL CV <span className="text-red-600">*</span>
-                            </label>
-                            <input
-                                type="url"
-                                value={cvUrl}
-                                onChange={(e) => setCvUrl(e.target.value)}
-                                placeholder="https://drive.google.com/file/d/..."
-                                className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                autoFocus
+                            <FileUpload
+                                onUploadSuccess={(url) => setCvUrl(url)}
+                                accept=".pdf,.doc,.docx"
+                                maxSize={5}
+                                label="Upload CV (PDF, DOC, DOCX)"
                             />
                         </div>
 

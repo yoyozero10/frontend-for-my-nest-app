@@ -117,28 +117,6 @@ export default function ProfilePage() {
                                 </div>
                             )}
                         </div>
-
-                        {/* Permissions */}
-                        {user.permissions && user.permissions.length > 0 && (
-                            <div className="pt-6 border-t border-stone-200">
-                                <h3 className="text-sm font-medium text-stone-600 mb-3">
-                                    Quyền hạn ({user.permissions.length})
-                                </h3>
-                                <div className="grid md:grid-cols-2 gap-2">
-                                    {user.permissions.map((permission: any, index: number) => (
-                                        <div
-                                            key={index}
-                                            className="px-3 py-2 bg-stone-50 rounded-lg border border-stone-200 text-sm"
-                                        >
-                                            <p className="font-medium text-stone-900">{permission.name}</p>
-                                            <p className="text-xs text-stone-500 mt-1">
-                                                {permission.method} {permission.apiPath}
-                                            </p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
 

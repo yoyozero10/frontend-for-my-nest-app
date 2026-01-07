@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCreateCompany } from '../../../hooks/useCompanies';
 import { ArrowLeft, Loader2 } from 'lucide-react';
+import FileUpload from '../../../components/FileUpload';
 import type { CreateCompanyDto } from '../../../types/company';
 
 export default function CreateCompanyPage() {
@@ -81,17 +82,14 @@ export default function CreateCompanyPage() {
                         />
                     </div>
 
-                    {/* Logo URL */}
+                    {/* Logo Upload */}
                     <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-stone-700 mb-2">
-                            Logo URL (Optional)
-                        </label>
-                        <input
-                            type="url"
-                            value={formData.logo}
-                            onChange={(e) => setFormData(prev => ({ ...prev, logo: e.target.value }))}
-                            className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-                            placeholder="https://example.com/logo.png"
+                        <FileUpload
+                            onUploadSuccess={(url) => setFormData(prev => ({ ...prev, logo: url }))}
+                            accept="image/*"
+                            maxSize={2}
+                            label="Upload Logo (Optional)"
+                            currentFile={formData.logo}
                         />
                     </div>
 

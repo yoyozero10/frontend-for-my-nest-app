@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
-import { LogOut, User, ChevronDown } from 'lucide-react';
+import { LogOut, User, ChevronDown, Settings } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Navigation() {
@@ -46,6 +46,9 @@ export default function Navigation() {
                     <Link to="/companies" className="hover:text-stone-900 transition-colors">
                         Công ty
                     </Link>
+                    <Link to="/subscribe" className="hover:text-stone-900 transition-colors">
+                        Đăng ký nhận việc
+                    </Link>
                     <Link to="/about" className="hover:text-stone-900 transition-colors">
                         Giới thiệu
                     </Link>
@@ -90,6 +93,17 @@ export default function Navigation() {
                                         <User className="w-4 h-4" />
                                         Hồ sơ đã nộp
                                     </Link>
+                                    {/* Admin shortcut for admin roles */}
+                                    {(user?.role?.name === 'SUPER_ADMIN' || user?.role?.name === 'ADMIN' || user?.role?.name === 'HR') && (
+                                        <Link
+                                            to="/admin"
+                                            className="flex items-center gap-3 px-4 py-2 text-sm text-stone-700 hover:bg-stone-50 transition-colors"
+                                            onClick={() => setShowDropdown(false)}
+                                        >
+                                            <Settings className="w-4 h-4" />
+                                            Quản trị
+                                        </Link>
+                                    )}
                                     <hr className="my-2 border-stone-100" />
                                     <button
                                         onClick={handleLogout}

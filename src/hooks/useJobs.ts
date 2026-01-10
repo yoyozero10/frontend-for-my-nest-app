@@ -11,7 +11,8 @@ export const useJobs = (page = 1, limit = 10, filters?: {
     return useQuery({
         queryKey: ['jobs', page, limit, filters],
         queryFn: () => jobService.getAllJobs(page, limit, filters),
-        staleTime: 5 * 60 * 1000, // Cache 5 phút
+        // Giảm staleTime để tránh hiển thị data cũ khi DB thay đổi
+        staleTime: 10 * 1000,
     });
 };
 

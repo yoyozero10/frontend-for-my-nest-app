@@ -6,7 +6,7 @@ export const useAllUsers = (page = 1, limit = 10) => {
     return useQuery({
         queryKey: ['all-users', page, limit],
         queryFn: () => usersApi.getAllUsers(page, limit),
-        staleTime: 5 * 60 * 1000,
+        staleTime: 10 * 1000,
     });
 };
 

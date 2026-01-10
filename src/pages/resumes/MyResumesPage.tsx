@@ -132,15 +132,15 @@ export default function MyResumesPage() {
                         </p>
                     </div>
                     <div className="bg-white rounded-lg border border-stone-200 p-4">
-                        <p className="text-sm text-stone-600 mb-1">Đang xem xét</p>
-                        <p className="text-2xl font-bold text-blue-600">
-                            {resumes.filter(r => r.status === 'REVIEWING').length}
-                        </p>
-                    </div>
-                    <div className="bg-white rounded-lg border border-stone-200 p-4">
                         <p className="text-sm text-stone-600 mb-1">Được chấp nhận</p>
                         <p className="text-2xl font-bold text-green-600">
                             {resumes.filter(r => r.status === 'APPROVED').length}
+                        </p>
+                    </div>
+                    <div className="bg-white rounded-lg border border-stone-200 p-4">
+                        <p className="text-sm text-stone-600 mb-1">Bị từ chối</p>
+                        <p className="text-2xl font-bold text-red-600">
+                            {resumes.filter(r => r.status === 'REJECTED').length}
                         </p>
                     </div>
                 </div>
@@ -172,12 +172,12 @@ export default function MyResumesPage() {
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex-1">
                                         <h3 className="text-lg font-semibold text-stone-900 mb-1">
-                                            {resume.jobId.name}
+                                            {resume.jobId?.name || 'Job không xác định'}
                                         </h3>
                                         <div className="flex items-center gap-4 text-sm text-stone-600">
                                             <div className="flex items-center gap-1">
                                                 <Building2 className="w-4 h-4" />
-                                                <span>{resume.companyId.name}</span>
+                                                <span>{resume.companyId?.name || 'Company không xác định'}</span>
                                             </div>
                                             <div className="flex items-center gap-1">
                                                 <Calendar className="w-4 h-4" />
@@ -200,7 +200,7 @@ export default function MyResumesPage() {
                                         <ExternalLink className="w-3 h-3" />
                                     </a>
                                     <button
-                                        onClick={() => navigate(`/jobs/${resume.jobId._id}`)}
+                                        onClick={() => resume.jobId?._id && navigate(`/jobs/${resume.jobId._id}`)}
                                         className="flex items-center gap-2 text-stone-600 hover:text-stone-900 font-medium text-sm"
                                     >
                                         <Briefcase className="w-4 h-4" />
@@ -209,7 +209,7 @@ export default function MyResumesPage() {
                                 </div>
 
                                 {/* History */}
-                                {resume.history.length > 1 && (
+                                {resume.history && resume.history.length > 1 && (
                                     <div className="mt-4 pt-4 border-t border-stone-200">
                                         <p className="text-xs text-stone-500 mb-2">Lịch sử:</p>
                                         <div className="space-y-1">

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Briefcase, Building2, FileText, Users } from 'lucide-react';
+import { LayoutDashboard, Briefcase, Building2, FileText, Users, Shield, Bell } from 'lucide-react';
 
 export default function AdminSidebar() {
     const menuItems = [
@@ -27,6 +27,21 @@ export default function AdminSidebar() {
             icon: Users,
             label: 'Users',
             path: '/admin/users'
+        },
+        {
+            icon: Shield,
+            label: 'Roles',
+            path: '/admin/roles'
+        },
+        {
+            icon: Shield,
+            label: 'Permissions',
+            path: '/admin/permissions'
+        },
+        {
+            icon: Bell,
+            label: 'Subscribers',
+            path: '/admin/subscribers'
         }
     ];
 

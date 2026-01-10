@@ -19,7 +19,7 @@ export const useAllResumes = (page = 1, limit = 10, status?: string) => {
     return useQuery({
         queryKey: ['all-resumes', page, limit, status],
         queryFn: () => resumesApi.getAllResumes(page, limit, status),
-        staleTime: 5 * 60 * 1000,
+        staleTime: 10 * 1000,
     });
 };
 

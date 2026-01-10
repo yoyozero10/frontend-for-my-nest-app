@@ -20,6 +20,11 @@ import CreateCompanyPage from './pages/admin/companies/CreateCompanyPage';
 import EditCompanyPage from './pages/admin/companies/EditCompanyPage';
 import AdminResumesPage from './pages/admin/resumes/AdminResumesPage';
 import AdminUsersPage from './pages/admin/users/AdminUsersPage';
+import AdminRolesPage from './pages/admin/roles/AdminRolesPage';
+import AdminPermissionsPage from './pages/admin/permissions/AdminPermissionsPage';
+import AdminSubscribersPage from './pages/admin/subscribers/AdminSubscribersPage';
+import SubscribePage from './pages/subscribe/SubscribePage';
+import ClearCachePage from './pages/ClearCachePage';
 import './index.css';
 
 // Create a client
@@ -46,6 +51,8 @@ function App() {
           <Route path="/companies/:id" element={<CompanyDetailPage />} />
           <Route path="/my-resumes" element={<MyResumesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/subscribe" element={<SubscribePage />} />
+          <Route path="/clear-cache" element={<ClearCachePage />} />
 
           {/* Admin Routes */}
           <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>}>
@@ -58,6 +65,9 @@ function App() {
             <Route path="companies/edit/:id" element={<EditCompanyPage />} />
             <Route path="resumes" element={<AdminResumesPage />} />
             <Route path="users" element={<AdminUsersPage />} />
+            <Route path="roles" element={<AdminRolesPage />} />
+            <Route path="permissions" element={<AdminPermissionsPage />} />
+            <Route path="subscribers" element={<AdminSubscribersPage />} />
           </Route>
         </Routes>
       </Router>

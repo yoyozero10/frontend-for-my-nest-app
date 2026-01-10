@@ -1,35 +1,56 @@
 import { useNavigate } from 'react-router-dom';
-import { Briefcase, Building2, FileText, Users, TrendingUp } from 'lucide-react';
+import { Briefcase, Building2, FileText, Users, TrendingUp, Loader2 } from 'lucide-react';
+import { useJobs } from '../../hooks/useJobs';
+import { useCompanies } from '../../hooks/useCompanies';
+import { useAllResumes } from '../../hooks/resumes.hooks';
+import { useAllUsers } from '../../hooks/users.hooks';
 
 export default function AdminDashboard() {
     const navigate = useNavigate();
+
+    // Fetch real data from API
+    const { data: jobsData, isLoading: loadingJobs } = useJobs(1, 1);
+    const { data: companiesData, isLoading: loadingCompanies } = useCompanies(1, 1);
+    const { data: resumesData, isLoading: loadingResumes } = useAllResumes(1, 1);
+    const { data: usersData, isLoading: loadingUsers } = useAllUsers(1, 1);
+
+    const isLoading = loadingJobs || loadingCompanies || loadingResumes || loadingUsers;
+
+    // Extract totals from API responses
+    // Jobs/Resumes: data?.data?.meta?.total (response wrapped by axios)
+    // Companies: data?.data?.meta?.totalItems
+    // Users: data?.data?.data?.meta?.total (extra data wrapper)
+    const totalJobs = jobsData?.data?.meta?.total || 0;
+    const totalCompanies = companiesData?.data?.meta?.totalItems || 0;
+    const totalResumes = resumesData?.data?.meta?.total || 0;
+    const totalUsers = usersData?.data?.data?.meta?.total || 0;
 
     const stats = [
         {
             icon: Briefcase,
             label: 'Total Jobs',
-            value: '24',
+            value: totalJobs,
             color: 'bg-blue-500',
             link: '/admin/jobs'
         },
         {
             icon: Building2,
             label: 'Companies',
-            value: '5',
+            value: totalCompanies,
             color: 'bg-green-500',
             link: '/admin/companies'
         },
         {
             icon: FileText,
             label: 'Resumes',
-            value: '12',
+            value: totalResumes,
             color: 'bg-yellow-500',
             link: '/admin/resumes'
         },
         {
             icon: Users,
             label: 'Users',
-            value: '8',
+            value: totalUsers,
             color: 'bg-purple-500',
             link: '/admin/users'
         }
@@ -54,7 +75,13 @@ export default function AdminDashboard() {
                             <TrendingUp className="w-5 h-5 text-green-500" />
                         </div>
                         <p className="text-sm text-stone-600 mb-1">{stat.label}</p>
-                        <p className="text-3xl font-bold text-stone-900">{stat.value}</p>
+                        <p className="text-3xl font-bold text-stone-900">
+                            {isLoading ? (
+                                <Loader2 className="w-6 h-6 animate-spin text-stone-400" />
+                            ) : (
+                                stat.value
+                            )}
+                        </p>
                     </div>
                 ))}
             </div>

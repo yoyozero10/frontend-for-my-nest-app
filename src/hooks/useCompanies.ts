@@ -11,7 +11,8 @@ export const useCompanies = (page = 1, limit = 12, filters?: {
     return useQuery({
         queryKey: ['companies', page, limit, filters],
         queryFn: () => companyService.getAllCompanies(page, limit, filters),
-        staleTime: 5 * 60 * 1000, // Cache 5 phút
+        // Giảm staleTime để tránh hiển thị data cũ khi DB thay đổi
+        staleTime: 10 * 1000,
     });
 };
 
